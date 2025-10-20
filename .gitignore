@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build artifacts
+build/
+*.o
+*.exe
+
+# Compiled binaries
+black_hole
+cpu_black_hole
+BlackHole2D
+BlackHole3D
+*.out
+*.app
+
+# IDE files
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# vcpkg
+vcpkg_installed/
