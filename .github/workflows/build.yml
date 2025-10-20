@@ -1,0 +1,51 @@
+name: macOS Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        brew install glew glfw glm cmake
+        
+    - name: Build CPU version
+      run: |
+        clang++ -std=c++17 -I/opt/homebrew/include -L/opt/homebrew/lib \
+          -lglfw -lGLEW -framework OpenGL CPU-geodesic.cpp -o cpu_black_hole
+          
+    - name: Build GPU version
+      run: |
+        clang++ -std=c++17 -I/opt/homebrew/include -L/opt/homebrew/lib \
+          -lglfw -lGLEW -framework OpenGL black_hole.cpp -o black_hole
+          
+    - name: Build 2D version
+      run: |
+        clang++ -std=c++17 -I/opt/homebrew/include -L/opt/homebrew/lib \
+          -lglfw -lGLEW -framework OpenGL 2D_lensing.cpp -o 2d_lensing
+          
+    - name: CMake build test
+      run: |
+        mkdir build && cd build
+        cmake ..
+        make
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-binaries
+        path: |
+          cpu_black_hole
+          black_hole
+          2d_lensing
+          *.comp
+          *.vert
+          *.frag
